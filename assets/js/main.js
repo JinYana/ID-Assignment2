@@ -170,56 +170,86 @@
 })(jQuery);
 
 
-var myHeaders = new Headers();
-myHeaders.append("Cookie", "__cfduid=d7632121edc0f177016ed0c3b58ed031c1609581596");
-
-var requestOptions = {
-  method: 'GET',
-  headers: myHeaders,
-  redirect: 'follow'
-};
-var test ="HLM"
-
-fetch("https://api.data.gov.sg/v1/transport/carpark-availability", requestOptions)
-  .then(response => response.json())
-  .then(function(result){
-    for (let i = 0; i < result.items[0].carpark_data.length; i++) {
-      let short = result.items[0].carpark_data[i]
-      if(short.carpark_number == test){
-        console.log(short.carpark_info[0])
-      }
-      
-    }
-  })
-
-  
-  $.getJSON("csvjson.json", function(data){
-    var items = []
-    $.each( data, function( key, val ) {
-      
-    });
-    console.log(data)
-    $('#search').keyup(function(){
-      var searchField = $(this).val();
-    if(searchField === '')  {
-    $('#filter-records').html('');
-    return;
-    }
+$.getJSON("csvjson.json", function(data){
+  var items = []
+  $.each( data, function( key, val ) {
     
-      var regex = new RegExp(searchField, "i");
-      var output = '<div class="row">';
-      
+  });
+  console.log(data)
+  $('#search').keyup(function(){
+    var searchField = $(this).val();
+    if(searchField === '')  {
+     $('#filter-records').html('');
+     return;
+    }
+  
+    var regex = new RegExp(searchField, "i");
+    var output = '<div class="row">';
+    
     $.each(data, function(key, val){
+
+      
     
       if ((val.address.search(regex) != -1) || (val.address.search(regex) != -1)) {
-        output += '<h5>' + val.address + '</h5>';
+        output += "<h5 class = 'click' id=" + val.address.split(' ').join('+') + "," + val.car_park_no + ">" + val.address + '</h5>';
         output += '</div><div class="row">'
-        }
         
-    
+        
+      }
     });
+
+    
+
     output += '</div>';
     $('#filter-records').html(output);
-    });
-  })
- 
+
+    let link = document.getElementsByClassName("click")
+
+    for(var i in link){
+
+      link[i].addEventListener("click", function hello(){
+        var map = document.getElementById("map");
+        x = this.id;
+        y = x.split(',');
+        i = y[1]
+        map.setAttribute("src", "https://www.google.com/maps/embed/v1/place?&q=" + y[0] + "&key=AIzaSyDoLt5klGDsa7vVSthlwpMnAcp9D5nTKXU");
+        
+        var myHeaders = new Headers();
+        myHeaders.append("Cookie", "__cfduid=d7632121edc0f177016ed0c3b58ed031c1609581596");
+
+        var requestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow'
+        };
+        
+        fetch("https://api.data.gov.sg/v1/transport/carpark-availability", requestOptions)
+          .then(response => response.json())
+          .then(result => {
+            
+            for (let i = 0; i < result.items[0].carpark_data.length; i++) {
+            if(result.items[0].carpark_data[i].carpark_number == y[1] ){
+               document.getElementById("carparkNo").innerHTML = result.items[0].carpark_data[i].carpark_number
+               document.getElementById("lots").innerHTML = result.items[0].carpark_data[i].carpark_info[0].total_lots
+              
+              
+
+            }
+     
+           }})
+          
+           
+
+
+        
+      })
+      
+    }
+    
+    
+    
+  });
+
+  
+     
+})
