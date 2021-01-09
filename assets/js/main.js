@@ -169,13 +169,13 @@
 
 })(jQuery);
 
-currentdate = new Date()
+
 $.getJSON("csvjson.json", function(data){
   var items = []
   $.each( data, function( key, val ) {
     
   });
-  console.log(data)
+  
   $('#search').keyup(function(){
     var searchField = $(this).val();
     if(searchField === '')  {
@@ -222,19 +222,22 @@ $.getJSON("csvjson.json", function(data){
         var requestOptions = {
           method: 'GET',
           headers: myHeaders,
-          redirect: 'follow'
+          redirect: 'follow',
+          
         };
         
-        fetch("https://api.data.gov.sg/v1/transport/carpark-availability?date_time=" + currentdate.getFullYear + "-" + ("0" + (currentdate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentdate.getDate())).slice(-2) + "T" + ("0" + (currentdate.getHours())).slice(-2) + ":" + ("0" + (currentdate.getMinutes())).slice(-2) + ":" + ("0" + (currentdate.getSeconds())).slice(-2), requestOptions)
+        
+        
+        fetch("https://api.data.gov.sg/v1/transport/carpark-availability" , requestOptions)
           .then(response => response.json())
           .then(result => {
-            
+            console.log(result.items[0].carpark_data[1].carpark_number)
             for (let i = 0; i < result.items[0].carpark_data.length; i++) {
             if(result.items[0].carpark_data[i].carpark_number == carnumber ){
                document.getElementById("carparkNo").innerHTML = "Carpark Number: " + result.items[0].carpark_data[i].carpark_number
-               document.getElementById("lots").innerHTML = "Carpark Address: " + data.address
+               document.getElementById("name").innerHTML = "Carpark Address: " + data.address
                document.getElementById("lots").innerHTML = "Total Lots: " + result.items[0].carpark_data[i].carpark_info[0].total_lots
-               document.getElementById("lots").innerHTML = "Lots Available: " + result.items[0].carpark_data[i].carpark_info[0].lots_available
+               document.getElementById("alots").innerHTML = "Lots Available: " + result.items[0].carpark_data[i].carpark_info[0].lots_available
                
               
               
