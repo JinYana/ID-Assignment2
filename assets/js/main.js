@@ -169,7 +169,8 @@
 
 })(jQuery);
 
-
+currentdate = new Date()
+    console.log(currentdate.getFullYear() + "-" + ("0" + (currentdate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentdate.getDate())).slice(-2) + "T" + ("0" + (currentdate.getHours())).slice(-2) + ":" + ("0" + (currentdate.getMinutes())).slice(-2) + ":" + ("0" + (currentdate.getSeconds())).slice(-2))
 $.getJSON("csvjson.json", function(data){
   var items = []
   $.each( data, function( key, val ) {
@@ -203,16 +204,18 @@ $.getJSON("csvjson.json", function(data){
     output += '</div>';
     $('#filter-records').html(output);
 
-    let link = document.getElementsByClassName("click")
+    let carlink = document.getElementsByClassName("click")
 
-    for(var i in link){
+    
+
+    for(var i in carlink){
 
       link[i].addEventListener("click", function hello(){
         var map = document.getElementById("map");
-        x = this.id;
-        y = x.split(',');
-        i = y[1]
-        map.setAttribute("src", "https://www.google.com/maps/embed/v1/place?&q=" + y[0] + "&key=AIzaSyDoLt5klGDsa7vVSthlwpMnAcp9D5nTKXU");
+        chosencar = this.id;
+        addressorcarnumber = chosencar.split(',');
+        carnumber = addressorcarnumber[1]
+        map.setAttribute("src", "https://www.google.com/maps/embed/v1/place?&q=" + addressorcarnumber[0] + "&key=AIzaSyDoLt5klGDsa7vVSthlwpMnAcp9D5nTKXU");
         
         var myHeaders = new Headers();
         myHeaders.append("Cookie", "__cfduid=d7632121edc0f177016ed0c3b58ed031c1609581596");
@@ -223,14 +226,15 @@ $.getJSON("csvjson.json", function(data){
           redirect: 'follow'
         };
         
-        fetch("https://api.data.gov.sg/v1/transport/carpark-availability", requestOptions)
+        fetch("https://api.data.gov.sg/v1/transport/carpark-availability?date_time=" + currentdate.getFullYear + "-" + ("0" + (currentdate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentdate.getDate())).slice(-2) + "T" + ("0" + (currentdate.getHours())).slice(-2) + ":" + ("0" + (currentdate.getMinutes())).slice(-2) + ":" + ("0" + (currentdate.getSeconds())).slice(-2), requestOptions)
           .then(response => response.json())
           .then(result => {
             
             for (let i = 0; i < result.items[0].carpark_data.length; i++) {
-            if(result.items[0].carpark_data[i].carpark_number == y[1] ){
-               document.getElementById("carparkNo").innerHTML = result.items[0].carpark_data[i].carpark_number
-               document.getElementById("lots").innerHTML = result.items[0].carpark_data[i].carpark_info[0].total_lots
+            if(result.items[0].carpark_data[i].carpark_number == carnumber ){
+               document.getElementById("carparkNo").innerHTML = "Carpark Number: " + result.items[0].carpark_data[i].carpark_number
+               document.getElementById("lots").innerHTML = "Carpark Address: " + result.items[0].carpark_data[i].carpark_info[0].total_lots
+               document.getElementById("lots").innerHTML = "Carpark Type: " + result.items[0].carpark_data[i].carpark_info[0].total_lots
               
               
 
