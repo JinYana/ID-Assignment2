@@ -232,8 +232,10 @@ $.getJSON("csvjson.json", function(data){
             for (let i = 0; i < result.items[0].carpark_data.length; i++) {
             if(result.items[0].carpark_data[i].carpark_number == carnumber ){
                document.getElementById("carparkNo").innerHTML = "Carpark Number: " + result.items[0].carpark_data[i].carpark_number
-               document.getElementById("lots").innerHTML = "Carpark Address: " + result.items[0].carpark_data[i].carpark_info[0].total_lots
-               document.getElementById("lots").innerHTML = "Carpark Type: " + result.items[0].carpark_data[i].carpark_info[0].total_lots
+               document.getElementById("lots").innerHTML = "Carpark Address: " + data.address
+               document.getElementById("lots").innerHTML = "Total Lots: " + result.items[0].carpark_data[i].carpark_info[0].total_lots
+               document.getElementById("lots").innerHTML = "Lots Available: " + result.items[0].carpark_data[i].carpark_info[0].lots_available
+               
               
               
 
