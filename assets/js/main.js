@@ -170,7 +170,6 @@
 })(jQuery);
 
 currentdate = new Date()
-    console.log(currentdate.getFullYear() + "-" + ("0" + (currentdate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentdate.getDate())).slice(-2) + "T" + ("0" + (currentdate.getHours())).slice(-2) + ":" + ("0" + (currentdate.getMinutes())).slice(-2) + ":" + ("0" + (currentdate.getSeconds())).slice(-2))
 $.getJSON("csvjson.json", function(data){
   var items = []
   $.each( data, function( key, val ) {
@@ -210,7 +209,7 @@ $.getJSON("csvjson.json", function(data){
 
     for(var i in carlink){
 
-      link[i].addEventListener("click", function hello(){
+      carlink[i].addEventListener("click", function hello(){
         var map = document.getElementById("map");
         chosencar = this.id;
         addressorcarnumber = chosencar.split(',');
