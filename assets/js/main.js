@@ -178,7 +178,7 @@ document.getElementById("newsletter").addEventListener("click", function(event){
 $.getJSON("carpark.json", function(data){
 
    
-  
+  //Code for live search bar
   $('#search').keyup(function(){
     let searchField = $(this).val();
     if(searchField === '')  {
@@ -216,7 +216,9 @@ $.getJSON("carpark.json", function(data){
 
     output += '</div>';
     $('#filter-records').html(output);
+    //end of code for live search bar
 
+    //Code for map to show carpark location
     let carlink = document.getElementsByClassName("click");
 
     
@@ -230,7 +232,10 @@ $.getJSON("carpark.json", function(data){
         let address = addressorcarnumber[0];
         let carnumber = addressorcarnumber[1];
         map.setAttribute("src", "https://www.google.com/maps/embed/v1/place?&q=" + address + "&key=AIzaSyDoLt5klGDsa7vVSthlwpMnAcp9D5nTKXU");
-        
+        // end of code for map to show carpark location
+
+
+        // code to display api data
         let myHeaders = new Headers();
         myHeaders.append("Cookie", "__cfduid=d7632121edc0f177016ed0c3b58ed031c1609581596");
 
@@ -286,6 +291,7 @@ $.getJSON("carpark.json", function(data){
                   count = 0
                   
                 }
+                // end of code to display api data
               }
             }
           })
