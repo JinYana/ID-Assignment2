@@ -940,8 +940,43 @@ section {
 
 
 /*--------------------------------------------------------------
-# Pricing
+# Locator
 --------------------------------------------------------------*/
+.locator iframe{
+  height: 700px;
+  width: 1200px;
+}
+
+#filter-records .row{
+
+  border-bottom: 1px solid;
+  border-color: #111;
+  cursor: pointer;
+
+}
+
+#filter-records .row:hover{
+ color: rgb(82, 216, 29);
+}
+.map{
+  overflow:hidden;
+  padding-bottom:56.25%;
+  position:relative;
+  height:0;
+}
+
+  
+
+
+
+.map iframe{
+  left:0;
+  top:0;
+  height:100%;
+  width:100%;
+  position:absolute;
+}
+
 
 
 
