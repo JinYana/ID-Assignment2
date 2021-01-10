@@ -169,6 +169,9 @@
 
 })(jQuery);
 
+document.getElementById("newsletter").addEventListener("click", function(event){
+  event.preventDefault()
+});
 
 $.getJSON("csvjson.json", function(data){
   
@@ -180,6 +183,13 @@ $.getJSON("csvjson.json", function(data){
      $('#filter-records').html('');
      return;
     }
+  
+    $("#search").keydown(function(event){
+      if(event.keyCode == 13) {
+        event.preventDefault();
+        return false;
+      }
+    });
   
     var regex = new RegExp(searchField, "i");
     var output = '<div class="row">';
