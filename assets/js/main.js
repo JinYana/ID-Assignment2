@@ -183,108 +183,113 @@ $.getJSON("csvjson.json", function(data){
      $('#filter-records').html('');
      return;
     }
-  });
-
-  $("#search").keydown(function(event){
-    if(event.keyCode == 13) {
-      event.preventDefault();
-      return false;
-    }
-  });
-
-  let regex = new RegExp(searchField, "i");
-  let output = '<div class="row">';
   
-  $.each(data, function(key, val){
-
-
   
-    if ((val.address.search(regex) != -1) || (val.address.search(regex) != -1)) {
-      output += "<h5 class = 'click' id=" + val.address.split(' ').join('+') + "," + val.car_park_no + ">" + val.address + '</h5>';
-      output += '</div><div class="row">';
-      
-      
-    }
-  });
-
   
-
-  output += '</div>';
-  $('#filter-records').html(output);
-
-  let carlink = document.getElementsByClassName("click");
-
   
+  
+    $("#search").keydown(function(event){
+      if(event.keyCode == 13) {
+        event.preventDefault();
+        return false;
+      }
+    });
+  
+    let regex = new RegExp(searchField, "i");
+    let output = '<div class="row">';
+    
+    $.each(data, function(key, val){
 
-  for(let i in carlink){
 
-    carlink[i].addEventListener("click", function hello(){
-      let map = document.getElementById("map");
-      let chosencar = this.id;
-      let addressorcarnumber = chosencar.split(',');
-      let address = addressorcarnumber[0];
-      let carnumber = addressorcarnumber[1];
-      map.setAttribute("src", "https://www.google.com/maps/embed/v1/place?&q=" + address + "&key=AIzaSyDoLt5klGDsa7vVSthlwpMnAcp9D5nTKXU");
-      
-      let myHeaders = new Headers();
-      myHeaders.append("Cookie", "__cfduid=d7632121edc0f177016ed0c3b58ed031c1609581596");
-
-      let requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        redirect: 'follow',
+    
+      if ((val.address.search(regex) != -1) || (val.address.search(regex) != -1)) {
+        output += "<h5 class = 'click' id=" + val.address.split(' ').join('+') + "," + val.car_park_no + ">" + val.address + '</h5>';
+        output += '</div><div class="row">';
         
-      };
-      
-      
-      
-      fetch("https://api.data.gov.sg/v1/transport/carpark-availability" , requestOptions)
-        .then(response => response.json())
-        .then(result => {
-          let count = 0;
-          for (let i = 0; i < result.items[0].carpark_data.length; i++) {
-           if(result.items[0].carpark_data[i].carpark_number == carnumber ){
-             document.getElementById("carparkNo").innerHTML = "Carpark Number: " + result.items[0].carpark_data[i].carpark_number;
-             document.getElementById("name").innerHTML = "Carpark Address: " + address.split('+').join(' ');
-             
-             
-             if(result.items[0].carpark_data[i].carpark_info[0].total_lots == "0" && result.items[0].carpark_data[i].carpark_info[0].lots_available == "0"){
-              document.getElementById("lots").innerHTML = "Total Lots: Parking Lot infomation not availble";
-              document.getElementById("alots").innerHTML = "Lots Avalible: Parking Lot infomation not availble";
+        
+      }
+    });
 
-             }
+    
 
-             else
-             {
-              document.getElementById("lots").innerHTML = "Total Lots: " + result.items[0].carpark_data[i].carpark_info[0].total_lots;
-              document.getElementById("alots").innerHTML = "Lots Available: " + result.items[0].carpark_data[i].carpark_info[0].lots_available;
-             }
-             count = 0;
-             
-              
-              
-             
-             
-            
-            }
-            else{
-              count = count + 1;
-              
-              
-              
-              if(count == result.items[0].carpark_data.length){
+    output += '</div>';
+    $('#filter-records').html(output);
 
-                document.getElementById("carparkNo").innerHTML = "Carpark Number: Parking Lot infomation not availble";
-                document.getElementById("name").innerHTML = "Carpark Address: Parking Lot infomation not availble";
+    let carlink = document.getElementsByClassName("click");
+
+    
+
+    for(let i in carlink){
+
+      carlink[i].addEventListener("click", function hello(){
+        let map = document.getElementById("map");
+        let chosencar = this.id;
+        let addressorcarnumber = chosencar.split(',');
+        let address = addressorcarnumber[0];
+        let carnumber = addressorcarnumber[1];
+        map.setAttribute("src", "https://www.google.com/maps/embed/v1/place?&q=" + address + "&key=AIzaSyDoLt5klGDsa7vVSthlwpMnAcp9D5nTKXU");
+        
+        let myHeaders = new Headers();
+        myHeaders.append("Cookie", "__cfduid=d7632121edc0f177016ed0c3b58ed031c1609581596");
+
+        let requestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow',
+          
+        };
+        
+        
+        
+        fetch("https://api.data.gov.sg/v1/transport/carpark-availability" , requestOptions)
+          .then(response => response.json())
+          .then(result => {
+            let count = 0;
+            for (let i = 0; i < result.items[0].carpark_data.length; i++) {
+             if(result.items[0].carpark_data[i].carpark_number == carnumber ){
+               document.getElementById("carparkNo").innerHTML = "Carpark Number: " + result.items[0].carpark_data[i].carpark_number;
+               document.getElementById("name").innerHTML = "Carpark Address: " + address.split('+').join(' ');
+               
+               
+               if(result.items[0].carpark_data[i].carpark_info[0].total_lots == "0" && result.items[0].carpark_data[i].carpark_info[0].lots_available == "0"){
                 document.getElementById("lots").innerHTML = "Total Lots: Parking Lot infomation not availble";
-                document.getElementById("alots").innerHTML = "Total Lots: Parking Lot infomation not availble";
-                count = 0
+                document.getElementById("alots").innerHTML = "Lots Avalible: Parking Lot infomation not availble";
+
+               }
+
+               else
+               {
+                document.getElementById("lots").innerHTML = "Total Lots: " + result.items[0].carpark_data[i].carpark_info[0].total_lots;
+                document.getElementById("alots").innerHTML = "Lots Available: " + result.items[0].carpark_data[i].carpark_info[0].lots_available;
+               }
+               count = 0;
+               
                 
+                
+               
+               
+              
+              }
+              else{
+                count = count + 1;
+                
+                
+                
+                if(count == result.items[0].carpark_data.length){
+
+                  document.getElementById("carparkNo").innerHTML = "Carpark Number: Parking Lot infomation not availble";
+                  document.getElementById("name").innerHTML = "Carpark Address: Parking Lot infomation not availble";
+                  document.getElementById("lots").innerHTML = "Total Lots: Parking Lot infomation not availble";
+                  document.getElementById("alots").innerHTML = "Total Lots: Parking Lot infomation not availble";
+                  count = 0
+                  
+                }
               }
             }
-          }
-        })
-      
-    });
-  }
-});
+          })
+        
+      })
+    }
+  })
+  
+})
