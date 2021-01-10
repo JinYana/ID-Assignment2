@@ -12,7 +12,7 @@ As a site createor I want people to use my site as a main way for they to find p
 As a user I want to be able to use the website to find parking lots I want to go to with ease
 
 ### Features:
--introduction on the website, including insructions on how to use it
+- introduction on the website, including insructions on how to use it
 - A live search bar that shows results as users type
 - A map showing the nearby carparks
 - Navigation menu at the top of the page
