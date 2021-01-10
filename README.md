@@ -45,6 +45,7 @@ iv results should come up as soon as you type and results should change as you t
 v.Click on desired carpark
 
 vi.If carpark is in the api carpark info and location should be displayed
+
 NOTE: Carpark Locator only works in a web server such as github pages. Otherwise, there will be a CORS error if run locally
 
 ### 2. Responsive website:
