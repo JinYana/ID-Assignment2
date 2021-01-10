@@ -33,26 +33,39 @@ As a user I want to be able to use the website to find parking lots I want to go
 
 ## Testing
 
-1. Carpark Locator:
+### 1. Carpark Locator:
 i.Go to the services page
+
 ii.Click on Carpark Locator
+
 iii.Try and search for a carpark
+
 iv results should come up as soon as you type and results should change as you type
+
 v.Click on desired carpark
+
 vi.If carpark is in the api carpark info and location should be displayed
 NOTE: Carpark Locator only works in a web server such as github pages. Otherwise, there will be a CORS error if run locally
 
-2. Responsive website:
+### 2. Responsive website:
+
 i.Right click on the website and click inspect element
+
 ii.Next choose the device you wish to view the website from
+
 iii.The website should be responsive and change its layout according to the device
 
-3. Navigation Bar:
+### 3. Navigation Bar:
 i.Click on Locator icon(left side of nav bar)
+
 ii.It should bring you to the home page(index.html)
+
 iii.Click on the 'home' option
+
 iv.ii.It should bring you to the home page(index.html)
+
 v. click on the 'services' option
+
 vi.It should bring you to the services page(services.html)
 
 ## Deployment
