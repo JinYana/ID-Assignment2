@@ -169,11 +169,13 @@
 
 })(jQuery);
 
+//prevent newsletter from submiting
 document.getElementById("newsletter").addEventListener("click", function(event){
   event.preventDefault()
 });
 
-$.getJSON("csvjson.json", function(data){
+//extract data from external JSON file
+$.getJSON("carpark.json", function(data){
 
    
   
