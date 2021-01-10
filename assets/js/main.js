@@ -171,10 +171,8 @@
 
 
 $.getJSON("csvjson.json", function(data){
-  var items = []
-  $.each( data, function( key, val ) {
-    
-  });
+  
+  
   
   $('#search').keyup(function(){
     var searchField = $(this).val();
@@ -211,10 +209,11 @@ $.getJSON("csvjson.json", function(data){
 
       carlink[i].addEventListener("click", function hello(){
         var map = document.getElementById("map");
-        chosencar = this.id;
-        addressorcarnumber = chosencar.split(',');
-        carnumber = addressorcarnumber[1]
-        map.setAttribute("src", "https://www.google.com/maps/embed/v1/place?&q=" + addressorcarnumber[0] + "&key=AIzaSyDoLt5klGDsa7vVSthlwpMnAcp9D5nTKXU");
+        var chosencar = this.id;
+        var addressorcarnumber = chosencar.split(',');
+        var address = addressorcarnumber[0]
+        var carnumber = addressorcarnumber[1]
+        map.setAttribute("src", "https://www.google.com/maps/embed/v1/place?&q=" + address + "&key=AIzaSyDoLt5klGDsa7vVSthlwpMnAcp9D5nTKXU");
         
         var myHeaders = new Headers();
         myHeaders.append("Cookie", "__cfduid=d7632121edc0f177016ed0c3b58ed031c1609581596");
@@ -231,20 +230,56 @@ $.getJSON("csvjson.json", function(data){
         fetch("https://api.data.gov.sg/v1/transport/carpark-availability" , requestOptions)
           .then(response => response.json())
           .then(result => {
-            console.log(result.items[0].carpark_data[1].carpark_number)
+            var count = 0
             for (let i = 0; i < result.items[0].carpark_data.length; i++) {
-            if(result.items[0].carpark_data[i].carpark_number == carnumber ){
+             if(result.items[0].carpark_data[i].carpark_number == carnumber ){
                document.getElementById("carparkNo").innerHTML = "Carpark Number: " + result.items[0].carpark_data[i].carpark_number
-               document.getElementById("name").innerHTML = "Carpark Address: " + data.address
-               document.getElementById("lots").innerHTML = "Total Lots: " + result.items[0].carpark_data[i].carpark_info[0].total_lots
-               document.getElementById("alots").innerHTML = "Lots Available: " + result.items[0].carpark_data[i].carpark_info[0].lots_available
+               document.getElementById("name").innerHTML = "Carpark Address: " + address.split('+').join(' ')
+               console.log(result.items[0].carpark_data[i].carpark_number)
+               
+               if(result.items[0].carpark_data[i].carpark_info[0].total_lots == "0" && result.items[0].carpark_data[i].carpark_info[0].lots_available == "0"){
+                document.getElementById("lots").innerHTML = "Total Lots: Parking Lot infomation not availble"
+                document.getElementById("alots").innerHTML = "Lots Avalible: Parking Lot infomation not availble"
+
+               }
+
+               else
+               {
+                document.getElementById("lots").innerHTML = "Total Lots: " + result.items[0].carpark_data[i].carpark_info[0].total_lots
+                document.getElementById("alots").innerHTML = "Lots Available: " + result.items[0].carpark_data[i].carpark_info[0].lots_available
+               }
+               count = 0
+               
+                
+                
+               
+               
+              
+              }
+              else{
+                count = count + 1
+                console.log(count)
+                console.log(result.items[0].carpark_data.length)
+                
+                if(count == result.items[0].carpark_data.length){
+
+                  document.getElementById("carparkNo").innerHTML = "Carpark Number: Parking Lot infomation not availble"
+                  document.getElementById("name").innerHTML = "Carpark Address: Parking Lot infomation not availble"
+                  document.getElementById("lots").innerHTML = "Total Lots: Parking Lot infomation not availble"
+                  document.getElementById("alots").innerHTML = "Total Lots: Parking Lot infomation not availble"
+                  count = 0
+                  
+                }
+              }
+               
+               
                
               
               
 
             }
      
-           }})
+          })
           
            
 
