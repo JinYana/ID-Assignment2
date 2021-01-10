@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Pricing - Company Bootstrap Template</title>
+  <title>Locator</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -87,15 +87,22 @@
     <section id="locator" class="locator">
       <div class="container" data-aos="fade-up">
 
-
-        <iframe width="1000" height="650" frameborder="0" style="border:0" id="map"
+       <div class= "map">
+        <iframe frameborder="0" style="border:0" id="map"
 	      src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDoLt5klGDsa7vVSthlwpMnAcp9D5nTKXU&q=Singapore" allowfullscreen></iframe>
-        <h1 id= "carparkNo">Carpark Number:</h1>
-        <h2 id="lots"></h2>
+        
+       </div>
+
+       <h2 id= "carparkNo"></h2>
+       <h2 id="name"></h2>
+       <h2 id="lots"></h2>
+       <h2 id="alots"></h2>
+        
+        
         
         <form role="form">
           <div class="form-group">
-            <input type="input"  id="search" placeholder="Type your location">
+            <input type="input"  id="search" placeholder="Type your location" onsubmit="{(e)=> e.preventDefault()}">
           </div>
       </form>
       <div id="filter-records"></div>
@@ -154,7 +161,7 @@
             <h4>Join Our Newsletter</h4>
             <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
             <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
+              <input id= "newsletter" type="email" name="email"><input type="submit" value="Subscribe">
             </form>
           </div>
 
